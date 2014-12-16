@@ -1,0 +1,51 @@
+<ion-view title="Add Expense">
+  <ion-content class="padding">
+    <br>
+
+<label class="item item-input item-select">
+    <div class="input-label">
+      Group
+    </div>	
+	
+	<select ng-model="expense.group_id">
+  <option ng-repeat="group in group" value={{group.id}}>
+    {{ group.name }}
+  </option>
+</select>
+</label>
+	<label class="item item-input item-select">
+    <div class="input-label">
+      Category
+    </div>
+    <select ng-model="expense.category">
+		<option>Entertainment</option>
+	  <option selected>Groceries</option>
+      <option>Gas</option>
+	  <option>Home Rent </option>
+	  <option>Shopping</option>
+	  <option>Services<option>
+    </select>
+  </label>
+  
+  
+<label class="item item-input">
+  <span class="input-label">Date</span>
+  <input type="date" ng-model="expense.date">
+</label>
+
+<label class="item item-input">
+  
+  <input type="text" placeholder="Description" ng-model="expense.description">
+</label>
+
+<label class="item item-input">
+    <input type="number" placeholder="Amount" ng-model="expense.amount">
+</label>
+
+  	<button class="button button-block button-positive" data-ng-click="saveExpense(expense)">
+  Save
+</button>
+
+
+ </ion-content>
+</ion-view>
