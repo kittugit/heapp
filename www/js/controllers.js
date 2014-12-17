@@ -6,7 +6,7 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('ExpenseCategoryCtrl', function($scope, Expense, $http) {
     $scope.categorizedExpenses =  {};
 	
-	$http.get('http://localhost:3000/expenses/bycategory').success(function(data, status, headers, config) {
+	$http.get('http://heservice.herokuapp.com/expenses/bycategory').success(function(data, status, headers, config) {
 	  console.log(data);
 	  $scope.categorizedExpenses = data;
     // this callback will be called asynchronously
@@ -22,7 +22,7 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('ExpenseItemCtrl', function($scope, $stateParams, Expense, $http) {
    $scope.byCategory = [];
    
-   $http.get('http://localhost:3000/expenses/bycategory/' + $stateParams.category).success(function(data, status, headers, config) {
+   $http.get('http://heservice.herokuapp.com/expenses/bycategory/' + $stateParams.category).success(function(data, status, headers, config) {
 	  console.log(data);
 	  $scope.byCategory = data;
     // this callback will be called asynchronously
@@ -78,7 +78,7 @@ angular.module('starter.controllers', ['ngCordova'])
    $scope.saveExpense = function(expin){
         //Expense.add(expin);;
 		
-	 $http.post('http://localhost:3000/expenses', expin).success(function(data, status, headers, config) {
+	 $http.post('http://heservice.herokuapp.com/expenses', expin).success(function(data, status, headers, config) {
 	  console.log(data);
 	  init();
     // this callback will be called asynchronously
@@ -88,8 +88,9 @@ angular.module('starter.controllers', ['ngCordova'])
     // called asynchronously if an error occurs
     // or server returns response with an error status.
 	console.log(data);
+	$cordovaToast.showShortTop('Expense is added');
   });
-	//$cordovaToast.showShortTop('Expense is added');
+	
    };
    
   
