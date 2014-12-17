@@ -3,16 +3,39 @@ angular.module('starter.controllers', ['ngCordova'])
 .controller('DashCtrl', function($scope) {
 })
 
-.controller('ExpensesCtrl', function($scope, Expense) {
-    $scope.groupByCategory =  (function() {
-	  return Expense.groupByCategory();
-	  }());
- })
+.controller('ExpenseCategoryCtrl', function($scope, Expense, $http) {
+    $scope.categorizedExpenses =  {};
+	
+	$http.get('http://localhost:3000/expenses/bycategory').success(function(data, status, headers, config) {
+	  console.log(data);
+	  $scope.categorizedExpenses = data;
+    // this callback will be called asynchronously
+    // when the response is available
+  }).
+  error(function(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+	console.log(data);
+  });
+  })
 
-.controller('ExpenseItemCtrl', function($scope, $stateParams, Expense) {
-   $scope.byCategory = Expense.getByCategory($stateParams.category);
+.controller('ExpenseItemCtrl', function($scope, $stateParams, Expense, $http) {
+   $scope.byCategory = [];
+   
+   $http.get('http://localhost:3000/expenses/bycategory/' + $stateParams.category).success(function(data, status, headers, config) {
+	  console.log(data);
+	  $scope.byCategory = data;
+    // this callback will be called asynchronously
+    // when the response is available
+  }).
+  error(function(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+	console.log(data);
+  });
    $scope.category = $stateParams.category;
 })
+
 
 
 .controller('GroupCtrl', function($scope, Expense, $cordovaContacts, $cordovaToast) {
@@ -48,21 +71,31 @@ angular.module('starter.controllers', ['ngCordova'])
    $scope.category = $stateParams.category;
 })
 
-.controller('ExpenseCtrl', function($scope, Expense, $cordovaContacts, $cordovaToast) {
+.controller('ExpenseCtrl', function($scope, Expense, $cordovaContacts, $cordovaToast, $http) {
 
    $scope.group = Expense.getGroup();
 	init();
    $scope.saveExpense = function(expin){
-        Expense.add(expin);;
-		init();
-		$cordovaToast.showShortTop('Expense is added');
+        //Expense.add(expin);;
 		
+	 $http.post('http://localhost:3000/expenses', expin).success(function(data, status, headers, config) {
+	  console.log(data);
+	  init();
+    // this callback will be called asynchronously
+    // when the response is available
+  }).
+  error(function(data, status, headers, config) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+	console.log(data);
+  });
+	//$cordovaToast.showShortTop('Expense is added');
    };
    
-   
+  
    function init(){
     $scope.expense={amount:'Amount', category: 'Groceries', date: '2014-12-25'};
-   var now = new Date();
+    var now = new Date();
    $scope.expense.date = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() ;
 
    }

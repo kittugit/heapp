@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'starter
       views: {
         'tab-expenses': {
           templateUrl: 'templates/tab-expenses.html',
-          controller: 'ExpensesCtrl'
+          controller: 'ExpenseCategoryCtrl'
         }
       }
     })
